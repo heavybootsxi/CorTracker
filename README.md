@@ -1,2 +1,2 @@
 # CorTracker
-FFXI Corsair Roll data tracker
+FFXI Corsair Roll data tracker for eden private server.
