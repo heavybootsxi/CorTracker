@@ -83,7 +83,6 @@ CorTracker.GetRollOdds = GetRollOdds;
 local GetRollValue = function()
     if (CorTracker.LastRoll['Die']['rolls'][CorTracker.LastRoll['RollNumber']] ~= nil) then
         local rollValue = CorTracker.LastRoll['Die']['rolls'][CorTracker.LastRoll['RollNumber']];
-        print(rollValue)
         if (CorTracker.LastRoll['RollNumber'] > 11) then
             return CorTracker.LastRoll.Die.bust;
         else
