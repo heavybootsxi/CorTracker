@@ -1,6 +1,6 @@
 _addon.author  = 'HeavyBoots';
 _addon.name    = 'CorTracker';
-_addon.version = '1.0.0';
+_addon.version = '1.0.1';
 
 require 'common';
 require 'ffxi.vanatime'
@@ -82,8 +82,9 @@ CorTracker.GetRollOdds = GetRollOdds;
 ---------------------------------------------------------------------------------------------------
 local GetRollValue = function()
     if (CorTracker.LastRoll['Die']['rolls'][CorTracker.LastRoll['RollNumber']] ~= nil) then
-        local rollnumber = CorTracker.LastRoll['Die']['rolls'][CorTracker.LastRoll['RollNumber']];
-        if (rollnumber > 11) then
+        local rollValue = CorTracker.LastRoll['Die']['rolls'][CorTracker.LastRoll['RollNumber']];
+        print(rollValue)
+        if (CorTracker.LastRoll['RollNumber'] > 11) then
             return CorTracker.LastRoll.Die.bust;
         else
             local value = tonumber(CorTracker.LastRoll['Die']['rolls'][CorTracker.LastRoll['RollNumber']]);
