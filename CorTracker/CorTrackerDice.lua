@@ -21,17 +21,6 @@ Dice = {
         [115] = 'Puppet Roll',
         [116] = 'Dancer\'s Roll',
         [117] = 'Scholar\'s Roll',
-        [118] = 'Bolter\'s Roll',
-        [119] = 'Caster\'s Roll',
-        [120] = 'Courser\'s Roll',
-        [121] = 'Blitzer\'s Roll',
-        [122] = 'Tactician\'s Roll',
-        [302] = 'Allies\' Roll',
-        [303] = 'Miser\'s Roll',
-        [304] = 'Companion\'s Roll',
-        [305] = 'Avenger\'s Roll',
-        [390] = 'Naturalist\'s Roll',
-        [391] = 'Runeist\'s Roll',
     },
 
     CorsairRoll_Data = {
@@ -89,7 +78,7 @@ Dice = {
             ['Job'] = Jobs.WhiteMage,
             ['lucky'] = 3,
             ['unlucky'] = 7,
-            ['rolls'] = { 3, 4, 12, 5, 6, 7, 1, 8, 9, 10, 16 },
+            ['rolls'] = {2, 3, 10, 4, 4, 5, 1, 6, 7, 7, 12},
             ['bonus'] = 4,
             ['effect'] = 3,
             ['bust'] = 4,
@@ -130,6 +119,7 @@ Dice = {
             ['lucky'] = 4,
             ['unlucky'] = 8,
             ['rolls'] = { 6.25, 7.81, 9.37, 25, 10.93, 12.50, 15.62, 3.12, 17.18, 18.75, 31.25 },
+            ['bonus'] = 9.76,
             ['effect'] = 3,
             ['bust'] = 10,
             ['desc'] = 'Pet: Attack / Ranged Attack'
@@ -234,107 +224,11 @@ Dice = {
             ['bust'] = 3,
             ['desc'] = 'Conserve MP'
         },
-        ['Naturalist\'s Roll'] = {
-            ['Job'] = Jobs.Geomancer,
-            ['lucky'] = 3,
-            ['unlucky'] = 7,
-            ['rolls'] = { 6, 7, 15, 8, 9, 10, 5, 11, 12, 13, 20 },
-            ['bonus'] = 5,
-            ['effect'] = 1,
-            ['bust'] = 5,
-            ['desc'] = 'Enhancing Magic Duration'
-        },
-        ['Runeist\'s Roll'] = {
-            ['Job'] = Jobs.RuneFencer,
-            ['lucky'] = 4,
-            ['unlucky'] = 8,
-            ['rolls'] = { 4, 6, 8, 25, 10, 12, 14, 2, 17, 20, 30 },
-            ['bonus'] = 15,
-            ['effect'] = 2,
-            ['bust'] = 10,
-            ['desc'] = 'Magic Evasion'
-        },
-        ['Bolter\'s Roll'] = {
-            ['lucky'] = 3,
-            ['unlucky'] = 9,
-            ['rolls'] = { 6, 6, 16, 8, 8, 10, 10, 12, 4, 14, 20 },
-            ['effect'] = 4,
-            ['bust'] = 0,
-            ['desc'] = 'Movement Speed'
-        },
-        ['Caster\'s Roll'] = {
-            ['lucky'] = 2,
-            ['unlucky'] = 7,
-            ['rolls'] = { 6, 15, 7, 8, 9, 10, 5, 11, 12, 13, 20 },
-            ['effect'] = 3,
-            ['bust'] = 10,
-            ['desc'] = 'Fast Cast'
-        },
-        ['Courser\'s Roll'] = {
-            ['lucky'] = 3,
-            ['unlucky'] = 9,
-            ['rolls'] = { 'Unknown', 'Unknown', 'Unknown', 'Unknown', 'Unknown', 'Unknown', 'Unknown', 'Unknown',
-                'Unknown',
-                'Unknown', 'Unknown' },
-            ['effect'] = 'Unknown',
-            ['bust'] = 'Unknown',
-            ['desc'] = 'Snapshot'
-        },
-        ['Blitzer\'s Roll'] = {
-            ['lucky'] = 4,
-            ['unlucky'] = 9,
-            ['rolls'] = { 2, 3, 4, 11, 5, 6, 7, 8, 1, 10, 12 },
-            ['effect'] = 1,
-            ['bust'] = 'Unknown',
-            ['desc'] = 'Haste'
-        },
-        ['Tactician\'s Roll'] = {
-            ['lucky'] = 5,
-            ['unlucky'] = 8,
-            ['rolls'] = { 10, 10, 10, 10, 30, 10, 10, 0, 20, 20, 40 },
-            ['effect'] = 2,
-            ['bust'] = 10,
-            ['desc'] = 'Regain'
-        },
-        ['Allies\' Roll'] = {
-            ['lucky'] = 3,
-            ['unlucky'] = 10,
-            ['rolls'] = { 2, 3, 20, 5, 7, 9, 11, 13, 15, 1, 25 },
-            ['effect'] = 1,
-            ['bust'] = 5,
-            ['desc'] = 'Skillchan Damage / Accuracy'
-        },
-        ['Miser\'s Roll'] = {
-            ['lucky'] = 5,
-            ['unlucky'] = 7,
-            ['rolls'] = { 30, 50, 70, 90, 200, 110, 20, 130, 150, 170, 250 },
-            ['effect'] = 15,
-            ['bust'] = 0,
-            ['desc'] = 'Save TP'
-        },
-        ['Avenger\'s Roll'] = {
-            ['lucky'] = 4,
-            ['unlucky'] = 8,
-            ['rolls'] = { 'Unknown', 'Unknown', 'Unknown', 14, 'Unknown', 'Unknown', 'Unknown', 'Unknown', 'Unknown',
-                'Unknown', 16 },
-            ['effect'] = 'Unknown',
-            ['bust'] = 'Unknown',
-            ['desc'] = 'Counter Rate'
-        },
-        ['Companion\'s Roll'] = {
-            ['lucky'] = 2,
-            ['unlucky'] = 10,
-            ['rolls'] = { '20,4', '50,20', '20,6', '20,8', '30,10', '30,12', '30,14', '40,16', '40,18', '10,3', '60,25' },
-            ['effect'] = '5,2',
-            ['bust'] = '0,0',
-            ['desc'] = 'Pet: Regain / Regen'
-        },
     },
 
     PercentageRolls = {
         'Chaos Roll', 'Corsair\'s Roll', 'Choral Roll', 'Beast Roll', 'Rogue\'s Roll', 'Fighter\'s Roll',
-        'Gallant\'s Roll', 'Scholar\'s Roll', 'Naturalist\'s Roll', 'Bolter\'s Roll', 'Caster\'s Roll', 'Courser\'s Roll',
-        'Blitzer\'s Roll', 'Allies\' Roll', 'Avenger\'s Roll'
+        'Gallant\'s Roll', 'Scholar\'s Roll'
     },
 
     -- data https://www.ffxionline.com/forum/ffxi-game-related/race-job-type-q-a/corsair/56520-phantom-roll-knowing-the-odds-long-math

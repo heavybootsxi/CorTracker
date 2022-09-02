@@ -12,6 +12,17 @@ local GuiVariables = {
 };
 
 ----------------------------------------------------------------------------------------------------
+-- func: ShowHelpMarker
+-- desc: Shows a tooltip.
+----------------------------------------------------------------------------------------------------
+local function ShowHelpMarker(desc)
+    imgui.TextDisabled('(?)');
+    if (imgui.IsItemHovered()) then
+        imgui.SetTooltip(desc);
+    end
+end
+
+----------------------------------------------------------------------------------------------------
 -- func: GuiWindow
 -- desc: The main GUI window
 ----------------------------------------------------------------------------------------------------
@@ -82,7 +93,9 @@ end
 ----------------------------------------------------------------------------------------------------
 local RenderCurrentActivity = function()
     imgui.PushStyleColor(ImGuiCol_Border, 0.25, 0.69, 1.0, 0.4);
-    imgui.TextColored(1.0, 1.0, 0.4, 1.0, 'Active Rolls');
+    imgui.TextColored(1.0, 1.0, 0.4, 1.0, 'Active Rolls ');
+    imgui.SameLine();
+    ShowHelpMarker('time remaining | roll | value | bonus | description');
     imgui.BeginGroup();
     imgui.BeginChild('ActiveRolls', 0, 100 - imgui.GetItemsLineHeightWithSpacing(), true);
     local e = T {};
@@ -120,7 +133,9 @@ local RenderCurrentActivity = function()
     end
     imgui.EndChild();
     imgui.EndGroup();
-    imgui.TextColored(1.0, 1.0, 0.4, 1.0, 'Roll Odds');
+    imgui.TextColored(1.0, 1.0, 0.4, 1.0, 'Roll Odds ');
+    imgui.SameLine();
+    ShowHelpMarker('(doube up timer) chance to bust %%\nplaystyle suggestions based on roll odds.\nsee CorTrackerDice.lua, \'RollOdds\' for details');
     imgui.BeginGroup();
     imgui.BeginChild('Odds', 0, 60 - imgui.GetItemsLineHeightWithSpacing(), true);
     if (CorTracker.LastRoll.RollTimeStamp ~= nil and CorTracker.LastRoll.RollNumber < 12 and CorTracker.ActiveRolls[CorTracker.LastRoll.RollId] ~= nil) then
@@ -143,7 +158,9 @@ local RenderCurrentActivity = function()
         end
     imgui.EndChild();
     imgui.EndGroup();
-    imgui.TextColored(1.0, 1.0, 0.4, 1.0, 'Roll Targets');
+    imgui.TextColored(1.0, 1.0, 0.4, 1.0, 'Roll Targets ');
+    imgui.SameLine();
+    ShowHelpMarker('target count | target names in alphabetical order');
     imgui.BeginGroup();
     imgui.BeginChild('Players', 0, 45 - imgui.GetItemsLineHeightWithSpacing(), true);
     if (CorTracker.LastRoll.RollTimeStamp ~= nil and CorTracker.LastRoll.RollNumber < 12 and CorTracker.ActiveRolls[CorTracker.LastRoll.RollId]) then
@@ -157,7 +174,9 @@ local RenderCurrentActivity = function()
     imgui.EndChild();
     imgui.EndGroup();
     imgui.BeginGroup();
-    imgui.TextColored(1.0, 1.0, 0.4, 1.0, 'Roll Log');
+    imgui.TextColored(1.0, 1.0, 0.4, 1.0, 'Roll Log ');
+    imgui.SameLine();
+    ShowHelpMarker('timestamp | roll | lucky/unlucky | roll number');
     imgui.BeginChild('RollLog', 0, 0, true);
     for _, v in pairs(CorTracker.AllRolls) do
         local rolllog = os.date('[%X] ',v.RollTimeStamp)

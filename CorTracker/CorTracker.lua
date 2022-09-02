@@ -1,6 +1,6 @@
 _addon.author  = 'HeavyBoots';
 _addon.name    = 'CorTracker';
-_addon.version = '1.0.1';
+_addon.version = '1.0.2';
 
 require 'common';
 require 'ffxi.vanatime'
