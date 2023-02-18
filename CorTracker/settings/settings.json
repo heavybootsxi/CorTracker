@@ -8,5 +8,5 @@
         "size": 14
     },
     "gui": true,
-    "shortText": true
+    "shortText": false
 }
