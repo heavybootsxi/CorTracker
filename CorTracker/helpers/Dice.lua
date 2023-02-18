@@ -1,6 +1,6 @@
 require 'ffxi.enums'
 Dice = {
-    CorsairRoll_IDs = {
+    corsairRollIDs = {
         [98] = 'Fighter\'s Roll',
         [99] = 'Monk\'s Roll',
         [100] = 'Healer\'s Roll',
@@ -23,216 +23,236 @@ Dice = {
         [117] = 'Scholar\'s Roll',
     },
 
-    CorsairRoll_Data = {
+    corsairRollData = {
         ['Corsair\'s Roll'] = {
-            ['Job'] = Jobs.Corsair,
+            ['job'] = Jobs.Corsair,
             ['lucky'] = 5,
             ['unlucky'] = 9,
             ['rolls'] = { 10, 11, 11, 12, 20, 13, 15, 16, 8, 17, 24 },
             ['bonus'] = 0,
             ['effect'] = 2,
             ['bust'] = 6,
-            ['desc'] = 'Experience Points'
+            ['desc'] = 'Experience Points',
+            ['buffID'] = 326,
         },
         ['Ninja Roll'] = {
-            ['Job'] = Jobs.Ninja,
+            ['job'] = Jobs.Ninja,
             ['lucky'] = 4,
             ['unlucky'] = 8,
             ['rolls'] = { 4, 6, 8, 25, 10, 12, 14, 2, 17, 20, 30 },
             ['bonus'] = 15,
             ['effect'] = 2,
             ['bust'] = 10,
-            ['desc'] = 'Evasion'
+            ['desc'] = 'Evasion',
+            ['buffID'] = 322,
         },
         ['Hunter\'s Roll'] = {
-            ['Job'] = Jobs.Ranger,
+            ['job'] = Jobs.Ranger,
             ['lucky'] = 4,
             ['unlucky'] = 8,
             ['rolls'] = { 10, 13, 15, 40, 18, 20, 25, 5, 27, 30, 50 },
             ['bonus'] = 15,
             ['effect'] = 5,
             ['bust'] = 15,
-            ['desc'] = 'Accuracy'
+            ['desc'] = 'Accuracy',
+            ['buffID'] = 320,
         },
         ['Chaos Roll'] = {
-            ['Job'] = Jobs.DarkKnight,
+            ['job'] = Jobs.DarkKnight,
             ['lucky'] = 4,
             ['unlucky'] = 8,
             ['rolls'] = { 6.25, 7.81, 9.37, 25, 10.93, 12.5, 15.62, 3.12, 17.18, 18.75, 31.25 },
             ['bonus'] = 9.76,
             ['effect'] = 3,
             ['bust'] = 10,
-            ['desc'] = 'Attack'
+            ['desc'] = 'Attack',
+            ['buffID'] = 317,
         },
         ['Magus\'s Roll'] = {
-            ['Job'] = Jobs.bluemage,
+            ['job'] = Jobs.bluemage,
             ['lucky'] = 2,
             ['unlucky'] = 6,
             ['rolls'] = { 5, 20, 6, 8, 9, 3, 10, 13, 14, 15, 25 },
             ['bonus'] = 8,
             ['effect'] = 2,
             ['bust'] = 8,
-            ['desc'] = 'Magic Defense Bonus'
+            ['desc'] = 'Magic Defense Bonus',
+            ['buffID'] = 325,
         },
         ['Healer\'s Roll'] = {
-            ['Job'] = Jobs.WhiteMage,
+            ['job'] = Jobs.WhiteMage,
             ['lucky'] = 3,
             ['unlucky'] = 7,
             ['rolls'] = {2, 3, 10, 4, 4, 5, 1, 6, 7, 7, 12},
             ['bonus'] = 4,
             ['effect'] = 3,
             ['bust'] = 4,
-            ['desc'] = 'Resting MP'
+            ['desc'] = 'Resting MP',
+            ['buffID'] = 312,
         },
         ['Drachen Roll'] = {
-            ['Job'] = Jobs.Dragoon,
+            ['job'] = Jobs.Dragoon,
             ['lucky'] = 4,
             ['unlucky'] = 8,
             ['rolls'] = { 10, 13, 15, 40, 18, 20, 25, 5, 28, 30, 50 },
             ['bonus'] = 15,
             ['effect'] = 5,
             ['bust'] = 15,
-            ['desc'] = 'Pet: Accuracy / Ranged Accuracy'
+            ['desc'] = 'Pet: Accuracy / Ranged Accuracy',
+            ['buffID'] = 323,
         },
         ['Choral Roll'] = {
-            ['Job'] = Jobs.Bard,
+            ['job'] = Jobs.Bard,
             ['lucky'] = 2,
             ['unlucky'] = 6,
             ['rolls'] = { 8, 42, 11, 15, 19, 4, 23, 27, 31, 35, 50 },
             ['bonus'] = 25,
             ['effect'] = 4,
             ['bust'] = 25,
-            ['desc'] = 'Spell Interruption Rate down'
+            ['desc'] = 'Spell Interruption Rate down',
+            ['buffID'] = 319,
         },
         ['Monk\'s Roll'] = {
-            ['Job'] = Jobs.Monk,
+            ['job'] = Jobs.Monk,
             ['lucky'] = 3,
             ['unlucky'] = 7,
             ['rolls'] = { 8, 10, 32, 12, 14, 16, 4, 20, 22, 24, 40 },
             ['bonus'] = 10,
             ['effect'] = 5,
             ['bust'] = 10,
-            ['desc'] = 'Subtle Blow'
+            ['desc'] = 'Subtle Blow',
+            ['buffID'] = 311,
         },
         ['Beast Roll'] = {
-            ['Job'] = Jobs.Beastmaster,
+            ['job'] = Jobs.Beastmaster,
             ['lucky'] = 4,
             ['unlucky'] = 8,
             ['rolls'] = { 6.25, 7.81, 9.37, 25, 10.93, 12.50, 15.62, 3.12, 17.18, 18.75, 31.25 },
             ['bonus'] = 9.76,
             ['effect'] = 3,
             ['bust'] = 10,
-            ['desc'] = 'Pet: Attack / Ranged Attack'
+            ['desc'] = 'Pet: Attack / Ranged Attack',
+            ['buffID'] = 318,
         },
         ['Samurai Roll'] = {
-            ['Job'] = Jobs.Samurai,
+            ['job'] = Jobs.Samurai,
             ['lucky'] = 2,
             ['unlucky'] = 6,
             ['rolls'] = { 8, 32, 10, 12, 14, 4, 16, 20, 22, 24, 40 },
             ['bonus'] = 10,
             ['effect'] = 4,
             ['bust'] = 10,
-            ['desc'] = 'Store TP'
+            ['desc'] = 'Store TP',
+            ['buffID'] = 321,
         },
         ['Evoker\'s Roll'] = {
-            ['Job'] = Jobs.Summoner,
+            ['job'] = Jobs.Summoner,
             ['lucky'] = 5,
             ['unlucky'] = 9,
             ['rolls'] = { 1, 1, 1, 1, 3, 2, 2, 2, 1, 3, 4 },
             ['bonus'] = 1,
             ['effect'] = 1,
             ['bust'] = 'Unknown',
-            ['desc'] = 'Refresh'
+            ['desc'] = 'Refresh',
+            ['buffID'] = 324,
         },
         ['Rogue\'s Roll'] = {
-            ['Job'] = Jobs.Thief,
+            ['job'] = Jobs.Thief,
             ['lucky'] = 5,
             ['unlucky'] = 9,
             ['rolls'] = { 1, 2, 3, 4, 10, 5, 6, 7, 1, 8, 14 },
             ['bonus'] = 5,
             ['effect'] = 1,
             ['bust'] = 5,
-            ['desc'] = 'Critical Hite Rate'
+            ['desc'] = 'Critical Hite Rate',
+            ['buffID'] = 315,
         },
         ['Warlock\'s Roll'] = {
-            ['Job'] = Jobs.RedMage,
+            ['job'] = Jobs.RedMage,
             ['lucky'] = 4,
             ['unlucky'] = 8,
             ['rolls'] = { 2, 3, 4, 12, 5, 6, 7, 1, 8, 9, 15 },
             ['bonus'] = 5,
             ['effect'] = 1,
             ['bust'] = 5,
-            ['desc'] = 'Magic Accuracy'
+            ['desc'] = 'Magic Accuracy',
+            ['buffID'] = 314,
         },
         ['Fighter\'s Roll'] = {
-            ['Job'] = Jobs.Warrior,
+            ['job'] = Jobs.Warrior,
             ['lucky'] = 5,
             ['unlucky'] = 9,
             ['rolls'] = { 1, 2, 3, 4, 10, 5, 6, 6, 1, 7, 15 },
             ['bonus'] = 5,
             ['effect'] = 1,
             ['bust'] = 'Unknown',
-            ['desc'] = 'Double Attack'
+            ['desc'] = 'Double Attack',
+            ['buffID'] = 310,
         },
         ['Puppet Roll'] = {
-            ['Job'] = Jobs.Puppetmaster,
+            ['job'] = Jobs.Puppetmaster,
             ['lucky'] = 3,
             ['unlucky'] = 7,
             ['rolls'] = { 5, 8, 35, 11, 14, 18, 2, 22, 26, 30, 40 },
             ['bonus'] = 12,
             ['effect'] = 3,
             ['bust'] = 12,
-            ['desc'] = 'Pet: Magic Accuracy / Magic Attack Bonus'
+            ['desc'] = 'Pet: Magic Accuracy / Magic Attack Bonus',
+            ['buffID'] = 327,
         },
         ['Gallant\'s Roll'] = {
-            ['Job'] = Jobs.Paladin,
+            ['job'] = Jobs.Paladin,
             ['lucky'] = 3,
             ['unlucky'] = 7,
             ['rolls'] = { 4.69, 5.86, 19.53, 7.03, 8.59, 10.16, 3.13, 11.72, 13.67, 15.63, 23.44 },
             ['bonus'] = 11.72,
             ['effect'] = 2.34,
             ['bust'] = '-11.72',
-            ['desc'] = 'Defense'
+            ['desc'] = 'Defense',
+            ['buffID'] = 316,
         },
         ['Wizard\'s Roll'] = {
-            ['Job'] = Jobs.BlackMage,
+            ['job'] = Jobs.BlackMage,
             ['lucky'] = 5,
             ['unlucky'] = 9,
             ['rolls'] = { 4, 6, 8, 10, 25, 12, 14, 17, 2, 20, 30 },
             ['bonus'] = 10,
             ['effect'] = 2,
             ['bust'] = 10,
-            ['desc'] = 'Magic Attack Bonus'
+            ['desc'] = 'Magic Attack Bonus',
+            ['buffID'] = 313,
         },
         ['Dancer\'s Roll'] = {
-            ['Job'] = Jobs.Dancer,
+            ['job'] = Jobs.Dancer,
             ['lucky'] = 3,
             ['unlucky'] = 7,
             ['rolls'] = { 3, 4, 12, 5, 6, 7, 1, 8, 9, 10, 16 },
             ['bonus'] = 4,
             ['effect'] = 2,
             ['bust'] = 4,
-            ['desc'] = 'Regen'
+            ['desc'] = 'Regen',
+            ['buffID'] = 328,
         },
         ['Scholar\'s Roll'] = {
-            ['Job'] = Jobs.Scholar,
+            ['job'] = Jobs.Scholar,
             ['lucky'] = 2,
             ['unlucky'] = 6,
             ['rolls'] = { 2, 10, 3, 4, 4, 1, 5, 6, 7, 7, 12 },
             ['bonus'] = 3,
             ['effect'] = 'Unknown',
             ['bust'] = 3,
-            ['desc'] = 'Conserve MP'
+            ['desc'] = 'Conserve MP',
+            ['buffID'] = 329,
         },
     },
 
-    PercentageRolls = {
+    percentageRolls = T {
         'Chaos Roll', 'Corsair\'s Roll', 'Choral Roll', 'Beast Roll', 'Rogue\'s Roll', 'Fighter\'s Roll',
         'Gallant\'s Roll', 'Scholar\'s Roll'
     },
 
     -- data https://www.ffxionline.com/forum/ffxi-game-related/race-job-type-q-a/corsair/56520-phantom-roll-knowing-the-odds-long-math
-    RollOdds = {
+    rollOdds = {
         ['Group 1'] = {
             ['dice'] = { 'Magus Roll', 'Choral Roll', 'Samurai Roll' }, -- 2/6 Rolls
             ['safe'] = { 1, 3, 4, 5, 6 },
@@ -271,5 +291,4 @@ Dice = {
         },
     },
 }
-
 return Dice;

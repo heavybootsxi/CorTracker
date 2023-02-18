@@ -1,0 +1,12 @@
+{
+    "font": {
+        "bgcolor": 2147483648,
+        "bgvisible": true,
+        "color": 4294967295,
+        "family": "Arial",
+        "position": [ 137, 197 ],
+        "size": 14
+    },
+    "gui": true,
+    "shortText": true
+}

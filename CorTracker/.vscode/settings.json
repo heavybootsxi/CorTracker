@@ -1,0 +1,25 @@
+{
+    "Lua.diagnostics.globals": [
+        "_addon",
+        "AshitaCore",
+        "GetEntity",
+        "struct",
+        "ParseAutoTranslate",
+        "GetPlayerEntity",
+        "ashita",
+        "Jobs",
+        "date",
+        "T",
+        "imgui",
+        "ImGuiSetCond_FirstUseEver",
+        "ImGuiCol_Button",
+        "switch",
+        "ImGuiCol_Border",
+        "ImGuiCol_Text"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-field",
+        "deprecated",
+        "unbalanced-assignments"
+    ]
+}
