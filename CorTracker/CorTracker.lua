@@ -210,7 +210,9 @@ local updateActiveRolls = function(lastDiceRoll)
         return;
     end
     local newActiveRoll = CorTracker.activeDiceRolls[lastDiceRoll.rollId];
-    if (newActiveRoll == nil or getRollDuration(lastDiceRoll.timeStamp) < 200) then
+    if (newActiveRoll == nil) then
+        CorTracker.activeDiceRolls[lastDiceRoll.rollId] = lastDiceRoll;
+    elseif (CorTracker.activeDiceRolls[lastDiceRoll.rollId].timeRemaining < 200) then
         CorTracker.activeDiceRolls[lastDiceRoll.rollId] = lastDiceRoll;
     else
         CorTracker.activeDiceRolls[lastDiceRoll.rollId].rollNumber = lastDiceRoll.rollNumber;
