@@ -27,8 +27,6 @@
 * * thorny     https://github.com/ThornyFFXI
 * * heals      https://github.com/Shirk
 * * daniel_h   https://github.com/DanielHazzard
-*
-* first addon, advice/suggestions/critique/feedback welcome
 ]]
 --
 
