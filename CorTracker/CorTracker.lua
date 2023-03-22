@@ -1,5 +1,5 @@
 --[[
-* Ashita - Copyright (c) 2014 - 2023 atom0s [atom0s@live.com]
+* 
 *
 * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
 * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
@@ -28,7 +28,7 @@
 * * heals      https://github.com/Shirk
 * * daniel_h   https://github.com/DanielHazzard
 *
-* 
+* first addon, advice/suggestions/critique/feedback welcome
 ]]
 --
 
