@@ -28,7 +28,7 @@
 * * heals      https://github.com/Shirk
 * * daniel_h   https://github.com/DanielHazzard
 *
-* first addon, advice/suggestions/critique/feedback welcome
+* 
 ]]
 --
 
@@ -76,6 +76,7 @@ local config = {
 local state = {
     active = false,
     settings = config,
+    doubleUpTimer = 0,
 };
 
 -------------------------------------------------------------------------------
@@ -126,16 +127,7 @@ end
 -- desc: Compares roll timestamp to vana timestamp
 ----------------------------------------------------------------------------------------------------
 local getRollDuration = function(rollTimeStamp)
-    local ts = ((rollTimeStamp + 300)) - ashita.ffxi.vanatime.get_raw_timestamp();
-    local h = (ts / 3600) % 24;
-    local m = (ts / 60) % 60;
-    local s = ((ts - (math.floor(ts / 60) * 60)));
-    --print(string.format('%02i:%02i:%02i',h, m, s));
-    return ts;
-
-    -- TODO: figure out correct duration
-    --local d = rollTimeStamp + 300 - os.time()
-    --return d
+    return (rollTimeStamp + 300) - ashita.ffxi.vanatime.get_raw_timestamp();
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -209,17 +201,11 @@ local updateActiveRolls = function(lastDiceRoll)
     if CorTracker == nil then
         return;
     end
-    local newActiveRoll = CorTracker.activeDiceRolls[lastDiceRoll.rollId];
-    if (newActiveRoll == nil) then
-        CorTracker.activeDiceRolls[lastDiceRoll.rollId] = lastDiceRoll;
-    elseif (CorTracker.activeDiceRolls[lastDiceRoll.rollId].timeRemaining < 200) then
-        CorTracker.activeDiceRolls[lastDiceRoll.rollId] = lastDiceRoll;
-    else
-        CorTracker.activeDiceRolls[lastDiceRoll.rollId].rollNumber = lastDiceRoll.rollNumber;
-        CorTracker.activeDiceRolls[lastDiceRoll.rollId].rollValue = lastDiceRoll.rollValue;
-        CorTracker.activeDiceRolls[lastDiceRoll.rollId].targets = lastDiceRoll.targets;
-        CorTracker.activeDiceRolls[lastDiceRoll.rollId].rollOdds = lastDiceRoll.rollOdds;
+
+    if (CorTracker.activeDiceRolls[lastDiceRoll.rollId] == nil or CorTracker.activeDiceRolls[lastDiceRoll.rollId].timeRemaining <255) then
+        state.doubleUpTimer = os.time();
     end
+    CorTracker.activeDiceRolls[lastDiceRoll.rollId] = lastDiceRoll;
 end
 
 ---------------------------------------------------------------------------------------------------
@@ -244,17 +230,18 @@ local manageActiveDiceRolls = function()
     if CorTracker == nil then
         return;
     end
+
     for k, roll in pairs(CorTracker.activeDiceRolls) do
         local timeRemaining = getRollDuration(roll.timeStamp);
-        if (timeRemaining < 225 or roll.rollNumber >= 12) then
+        CorTracker.activeDiceRolls[k].timeRemaining = timeRemaining;
+        if (timeRemaining < 255 or roll.rollNumber >= 12) then
             if not (table.hasvalue(CorTracker.rollHistoryGraph, CorTracker.activeDiceRolls[k])) then
                 table.insert(CorTracker.rollHistoryGraph, CorTracker.activeDiceRolls[k])
             end
         end
+
         if (timeRemaining <= 0 or roll.rollNumber >= 12) then
             CorTracker.activeDiceRolls[k] = nil;
-        else
-            CorTracker.activeDiceRolls[k].timeRemaining = timeRemaining;
         end
     end
 end
@@ -411,7 +398,7 @@ CorTracker.gui.renderCurrentActivity = function()
 
     if (CorTracker.activeDiceRolls[CorTracker.lastDiceRoll.rollId] ~= nil) then
         local dblUpTimer = os.difftime(
-            CorTracker.activeDiceRolls[CorTracker.lastDiceRoll.rollId].timeStamp + 45,
+            state.doubleUpTimer + 45,
             ashita.ffxi.vanatime.get_raw_timestamp());
 
         local bustChance = CorTracker.lastDiceRoll.rollOdds.bustChance;
@@ -490,18 +477,18 @@ CorTracker.gui.renderCurrentActivity = function()
     imgui.EndChild();
     imgui.EndGroup();
 end
---CorTracker.gui.renderCurrentActivity = renderCurrentActivity;
 
 ----------------------------------------------------------------------------------------------------
 -- func: renderGraph
 -- desc: Renders the roll graph
 ----------------------------------------------------------------------------------------------------
 CorTracker.gui.renderGraph = function()
-    imgui.PushStyleColor(ImGuiCol_PlotHistogram, 0.77, 0.83, 0.80, 0.3);
+    imgui.BeginGroup();
+    imgui.BeginChild('Trends', 0, 0, true);
 
     local test = T {};
 
-    for k, v in pairs(CorTracker.rollHistoryGraph) do
+    for _, v in pairs(CorTracker.rollHistoryGraph) do
         local roll = deepcopy(v);
         if (roll.rollNumber > 11) then
             roll.rollNumber = 0;
@@ -509,7 +496,7 @@ CorTracker.gui.renderGraph = function()
         if (test[Dice.corsairRollIDs[roll.rollId]] == nil) then
             test[Dice.corsairRollIDs[roll.rollId]] = T {};
         end
-        table.insert(test[Dice.corsairRollIDs[roll.rollId]], roll.rollNumber);
+        table.insert(test[Dice.corsairRollIDs[roll.rollId]], roll.rollValue);
     end
 
     for k, v in pairs(test) do
@@ -517,10 +504,26 @@ CorTracker.gui.renderGraph = function()
         for _, n in pairs(v) do
             sum = sum + n
         end
-        local avg = tostring(sum / #v)
-        imgui.PlotHistogram(k, v, #v, 0, avg, 0, 11, 200, 50);
+        local avg = tostring(math.floor(sum / #v));
+        imgui.PushStyleColor(ImGuiCol_Text, 1.0, 1.0, 0.4, 1.0);
+        --imgui.PushStyleColor(ImGuiCol_PlotHistogram, 0.39, 0.96, 0.13, 1);
+        if (table.hasvalue(Dice.percentageRolls, Dice.corsairRollIDs[k])) then
+            avg = avg .. '%'
+        end
+        imgui.PlotHistogram('', v, #v, 0, avg, math.min(unpack(v)), math.max(unpack(v)), 200, 25);
+        imgui.PopStyleColor();
+        imgui.SameLine();
+        imgui.TextUnformatted(' ' .. k);
+        imgui.PushStyleColor(ImGuiCol_Text, 1.0, 1.0, 0.4, 1.0);
+        imgui.PopStyleColor();
+
     end
+
+
+    imgui.EndChild();
+    imgui.EndGroup();
 end
+
 -------------------------------------------------------------------------------
 -- ashita events
 -------------------------------------------------------------------------------
@@ -595,10 +598,11 @@ end);
 -- desc: Event called when our addon receives an incoming packet.
 ---------------------------------------------------------------------------------------------------
 ashita.register_event('incoming_packet', function(id, size, packet)
-    -- zone clean up (0x00A)
     if (id == 0x00A) then
+            -- zone clean up (0x00A)
         state.Active = false;
-    elseif (id == 0x028) then --TODO: comment this packet and sub items.
+    elseif (id == 0x028) then
+        --TODO: comment this packet and sub items.
         local category = ashita.bits.unpack_be(packet, 82, 4);
         if category == 6 then
             local actor = struct.unpack('I', packet, 6);
