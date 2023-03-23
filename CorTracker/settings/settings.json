@@ -7,6 +7,7 @@
         "position": [ 137, 197 ],
         "size": 14
     },
+    "winningStreakMerits": 0,
     "gui": true,
     "shortText": false
 }
