@@ -4,6 +4,12 @@
         "struct",
         "AshitaCore",
         "imgui",
-        "ImGuiCol_Text"
+        "ImGuiCol_Text",
+        "Jobs",
+        "T",
+        "_addon",
+        "ImGuiSetCond_FirstUseEver",
+        "ImGuiCol_Button",
+        "ImGuiCol_Border"
     ]
 }

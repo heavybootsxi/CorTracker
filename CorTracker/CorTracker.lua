@@ -1,32 +1,31 @@
 --[[
-* Ashita - Copyright (c) 2014 - 2023 atom0s [atom0s@live.com]
+* MIT License
 *
-* This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
-* To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
-* Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+* Copyright (c) 2022-2023 heavybootsxi
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
 *
-* By using Ashita, you agree to the above license and its terms.
-*
-*      Attribution - You must give appropriate credit, provide a link to the license and indicate if changes were
-*                    made. You must do so in any reasonable manner, but not in any way that suggests the licensor
-*                    endorses you or your use.
-*
-*   Non-Commercial - You may not use the material (Ashita) for commercial purposes.
-*
-*   No-Derivatives - If you remix, transform, or build upon the material (Ashita), you may not distribute the
-*                    modified material. You are, however, allowed to submit the modified works back to the original
-*                    Ashita project in attempt to have it added to the original project.
-*
-* You may not apply legal terms or technological measures that legally restrict others
-* from doing anything the license permits.
-*
-* No warranties are given.
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
 *
 * Thanks:
-* * atom0s     https://github.com/atom0s
-* * thorny     https://github.com/ThornyFFXI
-* * heals      https://github.com/Shirk
-* * daniel_h   https://github.com/DanielHazzard
+*   atom0s     https://github.com/atom0s
+*   thorny     https://github.com/ThornyFFXI
+*   heals      https://github.com/Shirk
+*   daniel_h   https://github.com/DanielHazzard
 *
 * 
 ]]
@@ -69,6 +68,7 @@ local config = {
         bgcolor = 0x80000000,
         bgvisible = true
     },
+    winningStreakMerits = 0,
     shortText = false,
     gui = true,
 };
@@ -106,20 +106,20 @@ end
 -- desc: Returns a roll table sorted by timestamp
 ---------------------------------------------------------------------------------------------------
 local function sortRollTable(tbl)
-    local a = T {};
+    local e = T {};
 
     for _, v in pairs(tbl) do
-        table.insert(a, {
+        table.insert(e, {
             roll = v,
             timeStamp = v.timeStamp,
         });
     end
 
-    table.sort(a, function(k1, k2)
+    table.sort(e, function(k1, k2)
         return k1.timeStamp < k2.timeStamp;
     end);
 
-    return a;
+    return e;
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -127,7 +127,8 @@ end
 -- desc: Compares roll timestamp to vana timestamp
 ----------------------------------------------------------------------------------------------------
 local getRollDuration = function(rollTimeStamp)
-    return (rollTimeStamp + 300) - ashita.ffxi.vanatime.get_raw_timestamp();
+    local rollDuration = 300 + (20 * state.settings.winningStreakMerits);
+    return os.difftime(rollTimeStamp + rollDuration, ashita.ffxi.vanatime.get_raw_timestamp());
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -181,15 +182,18 @@ local getRollValue = function(lastDiceRoll)
 
     local value = tonumber(lastDiceRoll.die.rolls[lastDiceRoll.rollNumber]);
 
+    -- return half value without opportunity to get job bonus
+    if (CorTracker.player:GetMainJob() ~= Jobs.Corsair) then
+        return value / 2
+    end
+
+    -- return value + bonus only once
     for i = 0, 6 do
         if (CorTracker.party:GetMemberMainJob(i) == lastDiceRoll.die.job) then
-            value = value + tonumber(lastDiceRoll.die.bonus);
+            return value + tonumber(lastDiceRoll.die.bonus);
         end
     end
 
-    if (CorTracker.player:GetMainJob() ~= Jobs.Corsair) then
-        value = value / 2
-    end
     return value;
 end
 
@@ -234,6 +238,7 @@ local manageActiveDiceRolls = function()
     for k, roll in pairs(CorTracker.activeDiceRolls) do
         local timeRemaining = getRollDuration(roll.timeStamp);
         CorTracker.activeDiceRolls[k].timeRemaining = timeRemaining;
+
         if (timeRemaining < 255 or roll.rollNumber >= 12) then
             if not (table.hasvalue(CorTracker.rollHistoryGraph, CorTracker.activeDiceRolls[k])) then
                 table.insert(CorTracker.rollHistoryGraph, CorTracker.activeDiceRolls[k])
